@@ -43,17 +43,19 @@ namespace DocLibMan.Controllers
 
             if (files != null)
             {
-                fileInfo = GetFileInfo(files);
-                try
+                if (ModelState.IsValid)
                 {
-                    await new AzureBlob(_configuration).UploadFilesToBlobWithIndexTagsAsync(files, description);
+                    fileInfo = GetFileInfo(files);
+                    try
+                    {
+                        await new AzureBlob(_configuration).UploadFilesToBlobWithIndexTagsAsync(files, description);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Log exception instead of throw
+                        Debug.WriteLine("Upload to Blob failed {0}", ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    //Log exception instead of throw
-                    Debug.WriteLine("Upload to Blob failed {0}", ex.Message);
-                }
-
             }
 
             return View("Admin", fileInfo);

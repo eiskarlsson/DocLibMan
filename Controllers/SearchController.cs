@@ -39,14 +39,18 @@ namespace DocLibMan.Controllers
             var result = new List<DocLibManDocument>();
             if (searchParam != null && searchParam.SearchText != null)
             {
-                result = new AzureSearch(_configuration).Search(searchParam.SearchText).Result.ToList();
+                if (ModelState.IsValid)
+                {
+                    result = new AzureSearch(_configuration).Search(searchParam.SearchText).Result.ToList();
+                }
+
             }
             var model = new DocLibManSearchModel()
             { SearchText = searchParam.SearchText, SearchResults = result.ToList() };
 
             return View(model);
         }
-                
+
     }
 }
 
