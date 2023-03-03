@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b8a93d8c-76b2-490b-8997-f843fb029762</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Search.Documents" Version="11.4.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.15.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2023.1.117" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Templates\**" />
+    <Content Remove="Templates\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <None Remove="Templates\**" />
+    <Compile Remove="DocLibManTests\**" />
+    <EmbeddedResource Remove="DocLibManTests\**" />
+    <None Remove="DocLibManTests\**" />
+    <Content Remove="DocLibManTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\NuGet.Config" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\web.config" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\appsettings.test.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\appsettings.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\appsettings.test.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\bundleconfig.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\DocLibMan.deps.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\DocLibMan.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\DocLibMan.staticwebassets.runtime.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\DocLibManTests.deps.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\DocLibManTests.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\bin\Debug\net7.0\global.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\obj\DocLibManTests.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="DocLibManTests\obj\project.packagespec.json" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties UseCdnSupport="" /></VisualStudio></ProjectExtensions>
+
+</Project>

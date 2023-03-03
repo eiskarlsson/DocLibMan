@@ -1,0 +1,46 @@
+﻿@using DocLibMan.Models;
+@{
+    Layout = "_Layout";
+}
+@model DocLibManSearchModel
+
+<div class="container h-100 justify-content-center align-items-center">
+    <h4>Search Text Documents</h4>
+    @using (Html.BeginForm("Index", "Search", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-11">
+                @Html.Kendo().TextBoxFor(m => m.SearchText)
+
+            </div>
+            <div class="col-1">
+                <button>Submit</button>
+            </div>
+        </div>
+    }
+
+    @(
+        Html.Kendo().Grid(Model.SearchResults)
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.metadata_storage_name).Title("File Name");
+            columns.Bound(p => p.Description).Title("Description");
+            columns.Bound(p => p.metadata_content_type).Title("Content Type").Width(130);
+            columns.Bound(p => p.metadata_creation_date).Title("Creation Date").Width(130);
+            columns.Bound(p => p.metadata_storage_size).Title("Size").Width(130);
+            columns.Bound(p => p.DownloadLink).ClientTemplate("<a href='" + "#:DownloadLink#'" + ">Download</a>"
+            ).Title("Action");
+        })
+        .Pageable()
+        .Sortable()
+        .Scrollable(scr => scr.Height(430))
+        .Filterable()
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .ServerOperation(false)
+        )
+        )
+</div>

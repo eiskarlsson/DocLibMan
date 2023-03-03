@@ -1,0 +1,11 @@
+﻿/wwwroot/js/kendo-ui-license.js
+/Properties/PublishProfiles/DocLibMan20230301213400 - Web Deploy.pubxml
+/Properties/PublishProfiles/DocLibMan20230301213400 - Web Deploy1.pubxml
+/Properties/ServiceDependencies/DocLibMan20230301213400 - Web Deploy/profile.arm.json
+/Properties/ServiceDependencies/DocLibMan20230301213400 - Web Deploy1/profile.arm.json
+/appsettings.json
+/DocLibManTests/appsettings.test.json
+*.suo
+*.user
+bin
+obj

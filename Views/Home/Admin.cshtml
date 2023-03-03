@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "_Layout";
+}
+@model IEnumerable<string>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <h4>Upload Text Documents</h4>
+        <form id="filesForm" method="post" action='@Url.Action("Admin")' enctype="multipart/form-data" class="col-12">
+            @Html.AntiForgeryToken()
+            <div>
+                @(Html.Kendo().Upload()
+                    .Name("files")
+                    .Messages(m => m.Select("Select upload file"))
+                    .Multiple(false)
+                    .HtmlAttributes(new { aria_label = "file" })
+                    .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf", ".txt", ".docx", ".xlsx", ".pptx", ".html", ".xml" }).MaxFileSize(5000000))
+                    )
+                <div class="k-w-300">
+                    @(Html.Kendo().TextArea()
+                        .Name("description")
+                        .Label(label => label.Content("Enter Description:"))
+                        .Placeholder("Enter your text here.")
+                        .Rows(10)
+                        .MaxLength(254)
+                        .HtmlAttributes(new { style = "width: 100%" })
+                        )
+                </div>
+                <p style="padding-top: 1em; text-align: right">
+                    <button id="uploadButton" type="submit" class="k-button k-button-solid-primary k-button-solid k-button-md k-rounded-md">Submit</button>
+                </p>
+                <div>You can only upload <strong>PDF, TXT, DOCX, XLSX, PPTX, HTML, XML</strong> files.</div>
+            </div>
+        </form>
+        
+        @{
+            
+            if (Model != null)
+            {
+                <text>File:&nbsp;</text>
+                foreach (var m in Model)
+                {
+                   @Html.DisplayFor(m=>m) ;
+                }
+                <text>&nbsp; uploaded.</text>
+            }
+        }
+        
+
+        <div id="validation-summary">
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(document).ready(function () {
+        var validator = $("#filesForm").data("kendoValidator");
+        var validationSummary = $("#validation-summary");
+
+        $("#filesForm").submit(function (event) {
+            event.preventDefault();
+
+            if (validator.validate()) {
+                validationSummary.html("<div class='k-messagebox k-messagebox-success'>Hooray! Your file has been uploaded!</div>");
+            } else {
+                validationSummary.html("<div class='k-messagebox k-messagebox-error'>Oops! There is invalid data in the form.</div>");
+            }
+        });
+    });
+</script>*@
