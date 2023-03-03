@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,7 +15,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link href="~/css/site.min.css" rel="stylesheet" />
     </environment>
-        
+
     <link href="https://kendo.cdn.telerik.com/2023.1.117/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
     <script src="https://kendo.cdn.telerik.com/2023.1.117/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2023.1.117/js/jszip.min.js"></script>
@@ -23,63 +23,58 @@
     <script src="https://kendo.cdn.telerik.com/2023.1.117/js/kendo.aspnetmvc.min.js"></script>
     <script src="~/js/kendo-ui-license.js"></script>
 </head>
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top p-3">
-    <div class="container">
-        <div class="navbar-header">
+<body class="d-flex flex-column h-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
             <kendo-button name="configure" tag="button" icon="menu" class="k-rpanel-toggle k-primary btn-toggle"></kendo-button>
-            <table style="width: 380%">
-                <tr>
-                    <td style="width: 50%;">
-                        <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                            <span style="color: black;">DocLibMan</span>
-                        </a>
-                    </td>
-                    <td style="width: 200%;">
-                        <div style="text-align: left;">
-                            <partial name="_CurrentUserPartial"/>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="responsive-panel" class="navbar-right">
-            <kendo-responsivepanel name="responsive-panel" auto-close="false" breakpoint="768" orientation="top">
-                @(Html.Kendo().Menu()
-                    .Name("Menu")
-                    .Items(items =>
-                    {
-                        items.Add().Text("Home").Action("Index", "Home").Enabled(true).Visible(true);
-                        items.Add().Text("Admin").Action("Admin", "Home").Enabled(true).Visible(true);
-                        items.Add().Text("Search").Action("Index", "Search").Enabled(true).Visible(true);
-                    })
-                    )
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <span style="color:black;">DocLibMan</span>
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <kendo-responsivepanel name="responsive-panel" auto-close="false" breakpoint="768" orientation="top">
+                            @(Html.Kendo().Menu()
+                                .Name("Menu")
+                                .Items(items =>
+                                {
+                                    items.Add().Text("Home").Action("Index", "Home").Enabled(true).Visible(true);
+                                    items.Add().Text("Admin").Action("Admin", "Home").Enabled(true).Visible(true);
+                                    items.Add().Text("Search").Action("Index", "Search").Enabled(true).Visible(true);
+                                })
+                                )
 
-            </kendo-responsivepanel>
+                        </kendo-responsivepanel>
+                    </li>
+                </ul>
+                <partial name="_CurrentUserPartial" />
+            </div>
         </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
     </div>
-</nav>
-<div class="container">
-    @RenderBody()
-</div>
 
-    <footer class="bg-light text-center text-lg-start">
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.025);">
-            Copyright © @DateTime.Now.Year DocLibMan All rights reserved.
-            <a class="text-dark" href="https://doclibman20230301213400.azurewebsites.net/">DocLibMan</a>
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.025);">
+                Copyright © @DateTime.Now.Year DocLibMan All rights reserved.
+                <a class="text-dark" href="https://doclibman20230301213400.azurewebsites.net/">DocLibMan</a>
+            </div>
+            <!-- Copyright -->
         </div>
-        <!-- Copyright -->
     </footer>
 
     <environment names="Development">
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
-<environment names="Staging,Production">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            asp-fallback-src="~/lib/bootstrap/js/bootstrap.bundle.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
-</environment>
-@await RenderSectionAsync("scripts", required: false)
+    <environment names="Staging,Production">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    </environment>
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
