@@ -15,7 +15,7 @@
                     .Messages(m => m.Select("Select upload file"))
                     .Multiple(false)
                     .HtmlAttributes(new { aria_label = "file" })
-                    .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf", ".txt", ".docx", ".xlsx", ".pptx", ".html", ".xml" }).MaxFileSize(5000000))
+                    .Validation(validation => validation.AllowedExtensions(new string[] { ".pdf", ".txt", ".docx", ".xlsx", ".pptx", ".html", ".xml" }).MaxFileSize(20000000))
                     )
                 <div class="k-w-300">
                     @(Html.Kendo().TextArea()
@@ -30,21 +30,25 @@
                 <p style="padding-top: 1em; text-align: right">
                     <button id="uploadButton" type="submit" class="k-button k-button-solid-primary k-button-solid k-button-md k-rounded-md">Submit</button>
                 </p>
-                <div>You can only upload <strong>PDF, TXT, DOCX, XLSX, PPTX, HTML, XML</strong> files.</div>
+                <div>You can only upload <strong>PDF, TXT, DOCX, XLSX, PPTX, HTML, XML</strong> files. Max file size <strong>20MB</strong>.</div>
             </div>
         </form>
-        
-        @{
-            
-            if (Model != null && Model.FileInfo.Any())
-            {
-                <text>File:&nbsp;</text>
-                foreach (var m in Model.FileInfo)
+        <span class="text-success">
+            @{
+
+                if (Model != null && Model.FileInfo.Any())
                 {
-                   @Html.DisplayFor(m=>m.FileInfo);
+
+                    <text>File:&nbsp;</text>
+                    foreach (var m in Model.FileInfo)
+                    {
+
+                        @Html.DisplayFor(m=>m.FileInfo);
+
+                    }
+                    <text>&nbsp; uploaded.</text>
                 }
-                <text>&nbsp; uploaded.</text>
             }
-        }
+        </span>
     </div>
 </div>
