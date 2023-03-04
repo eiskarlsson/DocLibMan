@@ -1,15 +1,17 @@
-﻿@{
+﻿@using DocLibMan.Models;
+@{
     Layout = "_Layout";
 }
-@model IEnumerable<string>
+@model AdminModel
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <h4>Upload Text Documents</h4>
+        <span class="text-danger">@Html.ValidationSummary(false)</span>
         <form id="filesForm" method="post" action='@Url.Action("Admin")' enctype="multipart/form-data" class="col-12">
             @Html.AntiForgeryToken()
             <div>
                 @(Html.Kendo().Upload()
-                    .Name("files")
+                    .Name("Files")
                     .Messages(m => m.Select("Select upload file"))
                     .Multiple(false)
                     .HtmlAttributes(new { aria_label = "file" })
@@ -17,7 +19,7 @@
                     )
                 <div class="k-w-300">
                     @(Html.Kendo().TextArea()
-                        .Name("description")
+                        .Name("Description")
                         .Label(label => label.Content("Enter Description:"))
                         .Placeholder("Enter your text here.")
                         .Rows(10)
@@ -34,36 +36,15 @@
         
         @{
             
-            if (Model != null)
+            if (Model != null && Model.FileInfo.Any())
             {
                 <text>File:&nbsp;</text>
-                foreach (var m in Model)
+                foreach (var m in Model.FileInfo)
                 {
-                   @Html.DisplayFor(m=>m) ;
+                   @Html.DisplayFor(m=>m.FileInfo);
                 }
                 <text>&nbsp; uploaded.</text>
             }
         }
-        
-
-        <div id="validation-summary">
-        </div>
     </div>
 </div>
-
-@*<script>
-    $(document).ready(function () {
-        var validator = $("#filesForm").data("kendoValidator");
-        var validationSummary = $("#validation-summary");
-
-        $("#filesForm").submit(function (event) {
-            event.preventDefault();
-
-            if (validator.validate()) {
-                validationSummary.html("<div class='k-messagebox k-messagebox-success'>Hooray! Your file has been uploaded!</div>");
-            } else {
-                validationSummary.html("<div class='k-messagebox k-messagebox-error'>Oops! There is invalid data in the form.</div>");
-            }
-        });
-    });
-</script>*@

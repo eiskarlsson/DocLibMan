@@ -11,6 +11,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
+using Kendo.Mvc.UI;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace DocLibMan.Controllers
 {
@@ -37,18 +40,18 @@ namespace DocLibMan.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Admin(IEnumerable<IFormFile> files, string description)
+        public async Task<IActionResult> Admin(AdminModel model)
         {
             IEnumerable<string> fileInfo = new List<string>();
 
-            if (files != null)
+            if (model.Files != null)
             {
                 if (ModelState.IsValid)
                 {
-                    fileInfo = GetFileInfo(files);
+                    fileInfo = GetFileInfo(model.Files);
                     try
                     {
-                        await new AzureBlob(_configuration).UploadFilesToBlobWithIndexTagsAsync(files, description);
+                        await new AzureBlob(_configuration).UploadFilesToBlobWithIndexTagsAsync(model.Files, model.Description);
                     }
                     catch (Exception ex)
                     {
@@ -58,7 +61,7 @@ namespace DocLibMan.Controllers
                 }
             }
 
-            return View("Admin", fileInfo);
+            return View("Admin", new AdminModel() {FileInfo = fileInfo,  Description = model.Description, Files = model.Files});
         }
 
         private IEnumerable<string> GetFileInfo(IEnumerable<IFormFile> files)
@@ -77,7 +80,5 @@ namespace DocLibMan.Controllers
         }
 
         
-
-       
     }
 }

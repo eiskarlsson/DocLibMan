@@ -10,6 +10,8 @@ using Moq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Azure;
+using DocLibMan.Helpers;
+using DocLibMan.Models;
 
 namespace DocLibMan.Controllers.Tests
 {
@@ -43,7 +45,7 @@ namespace DocLibMan.Controllers.Tests
         [TestMethod()]
         public void AdminTestPost()
         {
-            var result = _controller.Admin(_mockFiles, It.IsAny<string>());
+            var result = _controller.Admin(It.IsAny<AdminModel>());
             Assert.IsInstanceOfType(result, typeof(Task<IActionResult>));
         }
     }
