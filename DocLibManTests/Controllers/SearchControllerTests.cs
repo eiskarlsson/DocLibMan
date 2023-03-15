@@ -1,28 +1,23 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DocLibMan.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DocLibMan.Controllers;
+using DocLibMan.Helpers;
 using DocLibMan.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace DocLibMan.Controllers.Tests
+namespace DocLibManTests.Controllers
 {
     [TestClass()]
     public class SearchControllerTests
     {
-        private readonly Mock<IConfiguration> _mockConfiguration;
+        private readonly Mock<IAzureSearch> _mockAzureSearch;
         private readonly SearchController _controller;
         
         public SearchControllerTests()
         {
-            _mockConfiguration = new Mock<IConfiguration>();
-            _controller = new SearchController(_mockConfiguration.Object);
+            _mockAzureSearch = new Mock<IAzureSearch>();
+            _controller = new SearchController(_mockAzureSearch.Object);
         }
         
         [TestMethod()]

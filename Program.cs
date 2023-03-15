@@ -3,11 +3,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DocLibMan.Data;
+using DocLibMan.Helpers;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddSingleton<IAzureBlob, AzureBlob>();
+builder.Services.AddSingleton<IAzureSearch, AzureSearch>();
+builder.Services.AddSingleton<IAzureIndexer, AzureIndexer>();
+
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -34,12 +41,14 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
+    //Checks if db has any pending migrations and applies them
     app.UseMigrationsEndPoint();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+//Find Endpoint
 app.UseRouting();
 
 app.UseAuthorization();

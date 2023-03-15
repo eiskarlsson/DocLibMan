@@ -1,15 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DocLibMan.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DocLibMan.Helpers;
 using DocLibMan.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace DocLibMan.Helpers.Tests
+namespace DocLibManTests.Helpers
 {
     [TestClass()]
     public class AzureSearchTests

@@ -1,16 +1,26 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DocLibMan.Helpers
 {
-    public class AzureBlob
+    public interface IAzureBlob
+    {
+        public Task<int> UploadFilesToBlobWithIndexTagsAsync(IEnumerable<IFormFile> files,
+            string description = "");
+    }
+
+    public class AzureBlob : IAzureBlob
     {
         private readonly IConfiguration _configuration;
 
-        public AzureBlob(IConfiguration configuration)
+        private readonly IAzureIndexer _azureIndexer;
+
+        public AzureBlob(IConfiguration configuration, IAzureIndexer azureIndexer)
         { 
             _configuration = configuration;
+            _azureIndexer = azureIndexer;
         }
         public async Task<int> UploadFilesToBlobWithIndexTagsAsync(IEnumerable<IFormFile> files, string description = "")
         {
@@ -57,7 +67,7 @@ namespace DocLibMan.Helpers
                         await blobClient.UploadAsync(stream, true);
                         await blobClient.SetMetadataAsync(blobdetails);
                         // update index
-                        await new AzureIndexer(_configuration).Run();
+                        await _azureIndexer.Run();
                         uploadFileCount++;
                     }
                 }

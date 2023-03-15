@@ -8,7 +8,12 @@ using Azure.Storage.Blobs;
 
 namespace DocLibMan.Helpers
 {
-    public class AzureSearch
+    public interface IAzureSearch
+    {
+        public Task<IEnumerable<DocLibManDocument>> Search(string query);
+    }
+
+    public class AzureSearch : IAzureSearch
     {
         private readonly IConfiguration _configuration;
 

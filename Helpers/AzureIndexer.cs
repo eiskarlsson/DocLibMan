@@ -5,8 +5,12 @@ using System.Diagnostics;
 
 namespace DocLibMan.Helpers
 {
+    public interface IAzureIndexer
+    {
+        public Task<bool> Run();
+    }
 
-    public class AzureIndexer
+    public class AzureIndexer : IAzureIndexer
     {
         private readonly IConfiguration _configuration;
 
@@ -29,7 +33,7 @@ namespace DocLibMan.Helpers
                 var response = await indexerClient.RunIndexerAsync(blobIndexerName);
                 return !response.IsError;
             }
-            catch (RequestFailedException ex) when (ex.Status == 429)
+            catch (RequestFailedException ex) when (ex.Status == 429) //"Too many requests"
             {
                 Debug.WriteLine("Failed to run indexer: {0}", ex.Message);
                 return false;

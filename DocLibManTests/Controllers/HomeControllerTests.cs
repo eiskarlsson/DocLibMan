@@ -1,31 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DocLibMan.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Moq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Azure;
+﻿using DocLibMan.Controllers;
 using DocLibMan.Helpers;
 using DocLibMan.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
-namespace DocLibMan.Controllers.Tests
+namespace DocLibManTests.Controllers
 {
     [TestClass()]
     public class HomeControllerTests
     {
-        private readonly Mock<IConfiguration> _mockConfiguration;
-        private readonly IEnumerable<IFormFile> _mockFiles;
+        private readonly Mock<IAzureBlob> _mockAzureBlob;
         private readonly HomeController _controller;
         public HomeControllerTests()
         {
-            _mockConfiguration = new Mock<IConfiguration>();
-            _mockFiles = new List<IFormFile>() { };
-            _controller = new HomeController(_mockConfiguration.Object);
+            _mockAzureBlob = new Mock<IAzureBlob>();
+            _controller = new HomeController(_mockAzureBlob.Object);
         }
 
         [TestMethod()]

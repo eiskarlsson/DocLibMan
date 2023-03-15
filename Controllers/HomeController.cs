@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Reflection.Metadata;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
-using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
 using Kendo.Mvc.UI;
 using System.Drawing;
@@ -19,11 +18,11 @@ namespace DocLibMan.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration _configuration;
+        private readonly IAzureBlob _azureBlob;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(IAzureBlob azureBlob)
         {
-            _configuration = configuration;
+            _azureBlob = azureBlob;
         }
         public IActionResult Index()
         {
@@ -51,7 +50,7 @@ namespace DocLibMan.Controllers
                     fileInfo = GetFileInfo(model.Files);
                     try
                     {
-                        await new AzureBlob(_configuration).UploadFilesToBlobWithIndexTagsAsync(model.Files, model.Description);
+                        await _azureBlob.UploadFilesToBlobWithIndexTagsAsync(model.Files, model.Description);
                     }
                     catch (Exception ex)
                     {

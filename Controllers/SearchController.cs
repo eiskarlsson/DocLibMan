@@ -14,14 +14,12 @@ namespace DocLibMan.Controllers
     [Authorize]
     public class SearchController : Controller
     {
-        private IConfiguration _configuration { get; }
-        private String indexName { get; set; }
+        private IAzureSearch _azureSearch { get; }
+        
 
-
-        public SearchController(IConfiguration configuration)
+        public SearchController(IAzureSearch azureSearch)
         {
-            _configuration = configuration;
-            indexName = _configuration["SearchIndexName"];
+            _azureSearch =  azureSearch;
         }
 
         [HttpGet]
@@ -37,16 +35,16 @@ namespace DocLibMan.Controllers
         public IActionResult Index(DocLibManSearchModel searchParam)
         {
             var result = new List<DocLibManDocument>();
-            if (searchParam != null && searchParam.SearchText != null)
+            if (searchParam != null && !String.IsNullOrEmpty(searchParam.SearchText))
             {
                 if (ModelState.IsValid)
                 {
-                    result = new AzureSearch(_configuration).Search(searchParam.SearchText).Result.ToList();
+                    result = _azureSearch.Search(searchParam.SearchText).Result.ToList();
                 }
 
             }
             var model = new DocLibManSearchModel()
-            { SearchText = searchParam.SearchText, SearchResults = result.ToList() };
+            { SearchText = searchParam?.SearchText, SearchResults = result.ToList() };
 
             return View(model);
         }
